@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "archerdfu.profile"
+version = "0.1.0b0"
+description = "Module to operate and modify archer ballistic profiles"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["ARCHER", "archerdfu", "pydfuutil", 'dfuutil']
+license = {file = "LICENSE"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    "archerdfu-construct>=1.0.0",
+    "construct>=2.10.70",
+    "typing-extensions>=4.12.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/archerdfu/archerdfu.profile"
+"Bug Reports" = "https://github.com/archerdfu/archerdfu.profile/issues"
+"Source" = "https://github.com/archerdfu/archerdfu.profile"
+
+[tool.setuptools]
+py-modules = ["archerdfu.profile"]
+license-files = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["archerdfu*"]
+exclude = ["assets*", "tests*"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.5",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
