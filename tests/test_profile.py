@@ -63,7 +63,7 @@ class DragModel(list):
 def _split_tables(ctx):
     tables = []
     for prof in ctx.profiles:
-        table = ctx.table[prof.drf_start:prof.drf_end]
+        table = ctx._table[prof.drf_start:prof.drf_end]
         tables.append(DragModel(*table, typ=prof.bc_type))
     return tables
 
@@ -73,8 +73,8 @@ prof = Struct(
     'profiles' / Profile[lambda ctx: ctx.header.profiles_count],
     '_empty_profiles' / Profile[lambda ctx: PROFILES_COUNT - ctx.header.profiles_count],
     '_profiles_end' / Tell,
-    'pad' / Bytes(lambda ctx: ctx.header.c_drag_func_start - ctx._profiles_end),
-    'table' / DragCoeff[lambda ctx: ctx.header.c_drag_func_start + ctx.header.c_drag_func_size // DragCoeff.sizeof()],
+    '_pad' / Bytes(lambda ctx: ctx.header.c_drag_func_start - ctx._profiles_end),
+    '_table' / DragCoeff[lambda ctx: ctx.header.c_drag_func_size // DragCoeff.sizeof()],
     'tables' / Computed(_split_tables),
 )
 
@@ -84,10 +84,5 @@ def test_profile_parse():
         buffer = fp.read()[4096:]
 
     profiles = prof.parse(buffer)
-    # print(profiles)
-    #
-    # print(profiles.pad)
-    # end 421 / 6444
     print(profiles.tables[0].typ)
-
     print(profiles)
